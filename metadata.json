@@ -1,0 +1,5 @@
+{
+  "name": "PetPal (萌宠之家)",
+  "description": "A comprehensive pet care platform featuring pet sitting services, adoption marketplace, community feed, and AI pet health assistant.",
+  "requestFramePermissions": ["camera", "microphone", "geolocation"]
+}

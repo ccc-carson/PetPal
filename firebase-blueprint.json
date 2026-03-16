@@ -1,0 +1,123 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "displayName": { "type": "string" },
+        "email": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string", "enum": ["user", "provider", "admin"] },
+        "bio": { "type": "string" },
+        "location": { "type": "object" },
+        "isVerified": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "displayName", "email"]
+    },
+    "Pet": {
+      "title": "Pet",
+      "description": "Pet profile information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "ownerId": { "type": "string" },
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["cat", "dog", "other"] },
+        "breed": { "type": "string" },
+        "age": { "type": "number" },
+        "gender": { "type": "string" },
+        "photos": { "type": "array", "items": { "type": "string" } },
+        "healthLogs": { "type": "array" },
+        "vaccines": { "type": "array" }
+      },
+      "required": ["id", "ownerId", "name", "type"]
+    },
+    "ServiceRequest": {
+      "title": "ServiceRequest",
+      "description": "Pet sitting or boarding request",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "petName": { "type": "string" },
+        "type": { "type": "string", "enum": ["sitting", "boarding"] },
+        "startDate": { "type": "string", "format": "date-time" },
+        "endDate": { "type": "string", "format": "date-time" },
+        "budget": { "type": "number" },
+        "address": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "accepted", "in-progress", "completed", "cancelled"] },
+        "providerId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "petName", "type", "startDate", "endDate", "status", "address"]
+    },
+    "AdoptionPost": {
+      "title": "AdoptionPost",
+      "description": "Pet adoption or rehoming post",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "authorId": { "type": "string" },
+        "petName": { "type": "string" },
+        "petType": { "type": "string" },
+        "description": { "type": "string" },
+        "photos": { "type": "array", "items": { "type": "string" } },
+        "status": { "type": "string", "enum": ["available", "adopted", "pending"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "authorId", "petName", "petType", "status"]
+    },
+    "CommunityPost": {
+      "title": "CommunityPost",
+      "description": "Social feed post",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "authorId": { "type": "string" },
+        "content": { "type": "string" },
+        "media": { "type": "array", "items": { "type": "string" } },
+        "likes": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "authorId", "content", "createdAt"]
+    },
+    "ChatMessage": {
+      "title": "ChatMessage",
+      "description": "Real-time chat message",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderId": { "type": "string" },
+        "receiverId": { "type": "string" },
+        "text": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "senderId", "receiverId", "text", "timestamp"]
+    },
+    "ChatSession": {
+      "title": "ChatSession",
+      "description": "Metadata for a chat conversation",
+      "type": "object",
+      "properties": {
+        "participants": { "type": "array", "items": { "type": "string" } },
+        "lastMessage": { "type": "string" },
+        "lastTimestamp": { "type": "string", "format": "date-time" },
+        "participantInfo": { "type": "object" }
+      },
+      "required": ["participants", "lastMessage", "lastTimestamp"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": { "schema": "User", "description": "User profiles" },
+    "/pets/{petId}": { "schema": "Pet", "description": "Pet profiles" },
+    "/serviceRequests/{requestId}": { "schema": "ServiceRequest", "description": "Pet service requests" },
+    "/adoptionPosts/{postId}": { "schema": "AdoptionPost", "description": "Adoption listings" },
+    "/communityPosts/{postId}": { "schema": "CommunityPost", "description": "Community feed" },
+    "/chats/{chatId}/messages/{messageId}": { "schema": "ChatMessage", "description": "Chat messages between users" },
+    "/chatSessions/{chatId}": { "schema": "ChatSession", "description": "Chat session metadata" }
+  }
+}
